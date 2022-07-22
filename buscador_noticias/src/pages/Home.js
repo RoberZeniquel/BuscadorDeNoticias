@@ -8,8 +8,6 @@ function Home(){
       <>
         <h1> Buscador de Noticias </h1>
         <Buscador></Buscador>
-        
-        
       </>
     )
   }

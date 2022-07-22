@@ -13,17 +13,12 @@ function Buscador(props) {
   const [pagina, setPagina] = useState(1)
 
 
-  console.log('busqueda desde bucador: ' + busqueda)
-  
   useEffect( () =>{
-    console.log('busqueda desde buscador useEffect pagina: ' + busqueda)
     llamadaApi(busqueda, pagina)
   },[pagina]);
 
-  
   useEffect( () =>{
-    console.log('busqueda desde buscador useEffect busqueda: ' + busqueda)
-    setNoticias([])
+    limpiarNoticias()
     llamadaApi(busqueda, pagina)
   },[busqueda]);
 
@@ -35,27 +30,16 @@ function Buscador(props) {
   const buscar = (e) =>{
     e.preventDefault()
     setBusqueda(contenido)
-    console.log('buqueda desde buscador funcion buscar: ' + busqueda)
   }
 
   const llamadaApi = async(busqueda, pagina) => {
     setLoading(true)
-    console.log('busqueda desde llamadaApi: ' + busqueda)
     if (busqueda.length > 0) {
-      
-      console.log('busqueda desde filtro llamadaApi: ' + busqueda)
-      await axios.get(`https://newsapi.org/v2/everything?q=${busqueda}&page=${pagina}&pageSize=10&apiKey=484d5a159489482aad49c70bf04cd8f3`)
+      await axios.get(`https://newsapi.org/v2/everything?q=${busqueda}&page=${pagina}&pageSize=10&language=es&apiKey=484d5a159489482aad49c70bf04cd8f3`)
       .then((response) => {
         setNoticias([...noticias, ...response.data.articles])
         setTotalResultados(response.data.totalResults)
         setLoading(false)
-
-        console.log('noticias desde llamadaApi: ')
-        console.log(noticias)
-        console.log('totalResultados desde llamadaApi: ')
-        console.log(totalResultados)
-        console.log('response desde llamadaApi: ')
-        console.log(response)
         return(response.data)
       })
       .catch((error) => {
@@ -69,6 +53,12 @@ function Buscador(props) {
     setPagina(pagina + 1)
   }
 
+  const limpiarNoticias = () => {
+    for(let i=noticias.length; i>0; i--) {
+      noticias.pop()
+    }
+    return(noticias)
+  }
 
   if (error) {
     return (
@@ -80,12 +70,6 @@ function Buscador(props) {
     )
   }
 
-
-  console.log('noticias desde buscador: ')
-  console.log(noticias)
-  console.log('totalResultados desde buscador: ')
-  console.log(totalResultados)
-
   return (
     <>
       <form onSubmit={buscar}>
@@ -95,24 +79,26 @@ function Buscador(props) {
           placeholder="Ingrese noticia a buscar"
           onChange={handleChange}
         />
+        {contenido.length < 3 ? 
+        <button type="submit" className="btn btn-success" disabled>Buscar</button>
+        :
         <button type="submit" className="btn btn-success" >Buscar</button>
+        }
       </form>
-
-
 
       {busqueda.length > 0 ? (
       <>
-      <h1>{busqueda}</h1>
-      <h2>{totalResultados}</h2>
+        {noticias.length > 0 ?
+        <h5>Estas viendo {noticias.length} noticias de {totalResultados} resultados.</h5> :
+        <></>
+        }
       <ListaNoticias busqueda={busqueda}
                      noticias={noticias}
                      totalResultados={totalResultados}
       />
       <div>
         {loading ? (
-            <Button variant="success" disabled={true}>
-              Cargando ...
-            </Button>
+            <Spinner animation="border" variant="success" />
             ) : (
             <Button variant="success" onClick={cargarMas}>
               Cargar mas +

@@ -11,6 +11,7 @@ function App() {
       <Layout>
         <Routes>
           <Route index path="/" element={<Home />} />
+          <Route index path="/buscador" element={<Home />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
       </Layout>

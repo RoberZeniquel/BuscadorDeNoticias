@@ -7,27 +7,19 @@ function ListaNoticias(props) {
   const [noticias, setNoticias] = useState([])
   const [totalResultados, setTotalResultados] = useState(0)
 
-
-
   useEffect( () =>{
     setBusqueda(props.busqueda)
     setNoticias(props.noticias)
     setTotalResultados(props.totalResultados)   
   },[props.busqueda, props.noticias, props.totalResultados]);
 
-  console.log('busqueda desde ListaNoticias')
-  console.log(busqueda)
-  console.log('noticias desde ListaNoticias')
-  console.log(noticias)
-  console.log('totalResultados desde ListaNoticias')
-  console.log(totalResultados)
-
   return (
     <>
       <div >
         {!noticias || noticias.length === 0 ? 
         <p>no hay noticias para mostrar</p>
-        : noticias.map( (noticia, index) =>{
+        : 
+          noticias.map( (noticia, index) =>{
             return(
             <Noticia id={index}
                      titulo={noticia.title}
@@ -37,6 +29,7 @@ function ListaNoticias(props) {
                      imagen={noticia.urlToImage}
                      fecha={noticia.publishedAt}
                      img={noticia.urlToImage}
+                     url={noticia.url}
                      />        
         )})}
       </div>
