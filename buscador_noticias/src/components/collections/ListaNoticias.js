@@ -1,23 +1,20 @@
 import { useEffect, useState } from 'react'
-import { Card, Spinner, Alert, Button } from 'react-bootstrap'
 import Noticia from './Noticia'
 
 function ListaNoticias(props) {
-  const [busqueda, setBusqueda] = useState('')
   const [noticias, setNoticias] = useState([])
-  const [totalResultados, setTotalResultados] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   useEffect( () =>{
-    setBusqueda(props.busqueda)
     setNoticias(props.noticias)
-    setTotalResultados(props.totalResultados)   
-  },[props.busqueda, props.noticias, props.totalResultados]);
+    setLoading(props.loading)
+  },[props.busqueda, props.noticias, props.totalResultados, props.loading]);
 
   return (
     <>
       <div >
-        {!noticias || noticias.length === 0 ? 
-        <p>no hay noticias para mostrar</p>
+        {(!noticias || noticias.length===0) && !loading ? 
+        <h3>no hay noticias para mostrar</h3>
         : 
           noticias.map( (noticia, index) =>{
             return(

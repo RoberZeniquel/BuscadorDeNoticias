@@ -1,8 +1,9 @@
 import './App.css'
-import { Routes, Route, Link, Redirect } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Error404 from './pages/Error404'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import './index.css'
 import Layout from './components/Layout'
 
 function App() {

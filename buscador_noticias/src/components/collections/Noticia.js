@@ -1,5 +1,4 @@
 import { Card, Col, Row } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 import { DateTime } from "luxon";
 
 function Noticia(props) {
@@ -19,7 +18,7 @@ function Noticia(props) {
         
         <Col>
           <Card>
-          <a href={props.url} target="_blank" rel="noreferrer">
+          <a href={props.url} target="_blank" rel="noreferrer" className="fuentes">
             <Card.Img variant="top" src={props.img} />
             <Card.Body>
               <Card.Title>{props.titulo}</Card.Title>

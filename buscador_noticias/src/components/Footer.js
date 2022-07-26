@@ -1,11 +1,16 @@
-
-
+import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap'
 
 function Footer(props) {
-
   return (
     <>
-    <h1>Footer</h1>
+      <footer className="text-white py-4 bg-dark footer" height="100%">
+      <Container>
+        <Row >
+          <Col className= 'text-center py-3' >Copyright &copy; 2022</Col>
+        </Row>
+      </Container>
+      </footer>
     </>
   )
 }

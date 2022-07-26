@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Spinner, Alert, Button } from 'react-bootstrap'
+import { Container, Spinner, Alert, Button } from 'react-bootstrap'
 import ListaNoticias from './collections/ListaNoticias'
 import axios from 'axios'
 
@@ -72,6 +72,7 @@ function Buscador(props) {
 
   return (
     <>
+    <Container className="contenido">
       <form onSubmit={buscar}>
         <input
           className="form-control inputBuscar"
@@ -79,6 +80,9 @@ function Buscador(props) {
           placeholder="Ingrese noticia a buscar"
           onChange={handleChange}
         />
+
+        <br/>
+
         {contenido.length < 3 ? 
         <button type="submit" className="btn btn-success" disabled>Buscar</button>
         :
@@ -86,27 +90,44 @@ function Buscador(props) {
         }
       </form>
 
+      <br/>
+
       {busqueda.length > 0 ? (
       <>
         {noticias.length > 0 ?
-        <h5>Estas viendo {noticias.length} noticias de {totalResultados} resultados.</h5> :
-        <></>
-        }
+        <h5>Estas viendo {noticias.length} noticias de {totalResultados} resultados</h5> :
+        <></>}
+
+      <br/>
       <ListaNoticias busqueda={busqueda}
                      noticias={noticias}
                      totalResultados={totalResultados}
+                     loading={loading}
       />
+
+
       <div>
         {loading ? (
+            <>
+            <br/>
+            <br/>
             <Spinner animation="border" variant="success" />
-            ) : (
-            <Button variant="success" onClick={cargarMas}>
+            <br/>
+            <br/>
+            </>
+            ):(
+            noticias.length > 0 ? (
+            <>
+            <Button className="botonCargarMas" variant="success" onClick={cargarMas}>
               Cargar mas +
             </Button>
+            </>
+            ):(<></>)   
         )}
       </div>
-      </>) : (<></>)
+      </>):(<></>)
       }
+    </Container>
     </>
   )
 }
